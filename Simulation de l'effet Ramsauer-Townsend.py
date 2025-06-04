@@ -1,5 +1,6 @@
+
 # Simulation de l'effet Ramsauer-Townsend
-# ---------------------------------------------------
+
 # Ce code simule la propagation d'un paquet d'ondes gaussien
 # interagissant avec un puits de potentiel 1D, afin de visualiser
 # la densite de probabilite de presence d'une particule quantique.
@@ -9,9 +10,10 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import math
 
-# ------------------------------
+
 # Parametres physiques et grille
-# ------------------------------
+
+
 dt = 1e-7                  # Pas de temps
 dx = 0.001                # Pas d'espace
 nx = int(2 / dx)          # Nombre de points spatiaux sur [0, 2]
@@ -19,9 +21,11 @@ nt = 90000                # Nombre total de pas de temps
 n_frames = int(nt / 1000) + 1  # Nombre d'images pour l'animation
 s = dt / dx**2            # Coefficient pour le schema numerique
 
-# ------------------------------
+
+
 # Parametres du potentiel
-# ------------------------------
+
+
 v0 = -4000                # Profondeur du puits (négative)
 e = 5                     # Rapport E/V0, donc E = e * V0
 E = e * v0
@@ -34,9 +38,11 @@ x_array = np.linspace(0, (nx - 1) * dx, nx)
 V = np.zeros(nx)
 V[(x_array >= 0.8) & (x_array <= 0.9)] = v0
 
-# ------------------------------
+
+
 # Paquet d'ondes gaussien initial
-# ------------------------------
+
+
 xc = 0.6                  # Centre initial du paquet
 sigma = 0.05              # Largeur du paquet
 A = 1 / (math.sqrt(sigma * math.sqrt(math.pi)))  # Facteur de normalisation
@@ -49,9 +55,11 @@ re = np.real(psi_init).copy()
 im = np.imag(psi_init).copy()
 b = np.zeros(nx)          # Tampon pour le schema
 
-# ------------------------------
+
+
 # Tableau pour stocker la densite de probabilite
-# ------------------------------
+
+
 density = np.zeros((nt, nx))
 density[0, :] = np.abs(psi_init)**2
 
@@ -59,9 +67,11 @@ density[0, :] = np.abs(psi_init)**2
 final_density = np.zeros((n_frames, nx))
 final_density[0, :] = density[0, :]
 
-# ------------------------------
+
+
 # Boucle principale de simulation
-# ------------------------------
+
+
 it = 0
 for i in range(1, nt):
     if i % 2 != 0:
@@ -75,9 +85,11 @@ for i in range(1, nt):
         it += 1
         final_density[it, :] = density[i, :]
 
-# ------------------------------
+
+
 # Animation matplotlib
-# ------------------------------
+
+
 fig = plt.figure(figsize=(10, 5))
 line, = plt.plot([], [], lw=2)
 plt.plot(x_array, V / abs(v0), label="Potentiel (echelle reduite)")
@@ -99,4 +111,3 @@ def animate(j):
 ani = animation.FuncAnimation(fig, animate, init_func=init, frames=n_frames,
                               interval=80, blit=False, repeat=False)
 plt.show()
-
