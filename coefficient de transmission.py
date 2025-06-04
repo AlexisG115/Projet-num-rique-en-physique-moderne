@@ -1,10 +1,12 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-# ----------------------------
+
 # PARAMÈTRES NUMÉRIQUES
-# ----------------------------
+
+
 dt = 1e-7              # Pas de temps
 dx = 0.001             # Pas d’espace
 nx = int(2 / dx)       # Nombre de points spatiaux
@@ -21,9 +23,11 @@ V[(x_array >= 0.8) & (x_array <= 0.9)] = -4000
 # Zone où on mesure la transmission (à droite du puits)
 transmitted_zone = x_array > 1.2
 
-# ----------------------------
+
+
 # FONCTION DE SIMULATION
-# ----------------------------
+
+
 def simulate_transmission(e_ratio):
     """Simule la propagation d’un paquet d’ondes pour un rapport E/V0 donné et calcule la transmission."""
     v0 = -4000
@@ -52,15 +56,19 @@ def simulate_transmission(e_ratio):
     transmission = np.sum(densite[transmitted_zone]) * dx
     return transmission
 
-# ----------------------------
+
+
 # CALCUL POUR PLUSIEURS ÉNERGIES
-# ----------------------------
+
+
 e_values = np.linspace(0.1, 10, 20)   # Valeurs de E/V0
 T_values = [simulate_transmission(e) for e in e_values]  # Transmission pour chaque énergie
 
-# ----------------------------
+
+
 # TRACÉ DU GRAPHIQUE T(E)
-# ----------------------------
+
+
 plt.figure(figsize=(10, 5))
 plt.plot(e_values, T_values, marker='o')
 plt.title("Coefficient de transmission T(E) en fonction de E/V0")
